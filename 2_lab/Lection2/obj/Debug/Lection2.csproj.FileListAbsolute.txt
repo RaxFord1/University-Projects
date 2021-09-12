@@ -5,3 +5,10 @@ D:\Универ Валера\OOP\Lection2\Lection2\obj\Debug\Lection2.csproj.Ass
 D:\Универ Валера\OOP\Lection2\Lection2\obj\Debug\Lection2.csproj.CoreCompileInputs.cache
 D:\Универ Валера\OOP\Lection2\Lection2\obj\Debug\Lection2.exe
 D:\Универ Валера\OOP\Lection2\Lection2\obj\Debug\Lection2.pdb
+D:\Университет\ООП\2_lab\Lection2\obj\Debug\Lection2.csproj.AssemblyReference.cache
+D:\Университет\ООП\2_lab\Lection2\obj\Debug\Lection2.csproj.CoreCompileInputs.cache
+D:\Университет\ООП\2_lab\Lection2\obj\Debug\Lection2.exe
+D:\Университет\ООП\2_lab\Lection2\obj\Debug\Lection2.pdb
+D:\Университет\ООП\2_lab\Lection2\bin\Debug\Lection2.exe.config
+D:\Университет\ООП\2_lab\Lection2\bin\Debug\Lection2.exe
+D:\Университет\ООП\2_lab\Lection2\bin\Debug\Lection2.pdb
