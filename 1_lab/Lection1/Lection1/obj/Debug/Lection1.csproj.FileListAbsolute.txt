@@ -1,0 +1,14 @@
+D:\Универ Валера\OOP\Lection1\Lection1\bin\Debug\Lection1.exe.config
+D:\Универ Валера\OOP\Lection1\Lection1\bin\Debug\Lection1.exe
+D:\Универ Валера\OOP\Lection1\Lection1\bin\Debug\Lection1.pdb
+D:\Универ Валера\OOP\Lection1\Lection1\obj\Debug\Lection1.csproj.AssemblyReference.cache
+D:\Универ Валера\OOP\Lection1\Lection1\obj\Debug\Lection1.csproj.CoreCompileInputs.cache
+D:\Универ Валера\OOP\Lection1\Lection1\obj\Debug\Lection1.exe
+D:\Универ Валера\OOP\Lection1\Lection1\obj\Debug\Lection1.pdb
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\bin\Debug\Lection1.exe.config
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\bin\Debug\Lection1.exe
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\bin\Debug\Lection1.pdb
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\obj\Debug\Lection1.csproj.AssemblyReference.cache
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\obj\Debug\Lection1.csproj.CoreCompileInputs.cache
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\obj\Debug\Lection1.exe
+D:\Университет\ООП\1 Лаба\Lection1\Lection1\obj\Debug\Lection1.pdb
