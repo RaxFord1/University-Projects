@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Laboratorna 2</title>
+</head>
+<body>
+    
+	<div class="content">
+		<form name="registrationForm" action="" class="form-reg">
+			<div class="form-reg__title">Регистрация</div>
+			<div class="form-reg__inputs">
+                <fieldset>
+                    <label for="name">Имя</label>
+                    <br>
+                    <input type="text" name="name" id="name">
+                    <br>
+                    <label for="soname">Фамилия</label>
+                    <br>
+                    <input type="text" name="surname" id="surname">
+                    <br>
+                    <label for="login">Логин</label>
+                    <br>
+                    <input type="text" name="login" id="login">
+                    <br>
+                    <label for="pass">Пароль</label>
+                    <br>
+                    <input type="password" name="pass" id="pass">
+                    <br>
+                    <label for="confirm-pass">Подтвердите пароль</label>
+                    <br>
+                    <input type="password" name="confirm-pass" id="confirm_pass">
+                    <br>
+                    <label for="mail">Адресс электронной почты</label>
+                    <br>
+                    <input type="mail" name="email" id="email">
+                    <br>
+                    <div class="sex">
+                        <fieldset>
+                            <span>Выберите ваш пол</span>
+                            <br>
+                            <label for="male">Мужской</label>
+                        
+                            <input type="radio" value="Мужчина" name="sex" id="male">
+                            <label for="female">Женский</label>
+                            <input type="radio" value="Женщина" name="sex" id="female">
+                        </fieldset>
+                    </div>
+                    <input class="submit" type="submit" value='Відправити'>
+                </fieldset>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

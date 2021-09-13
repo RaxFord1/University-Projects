@@ -1,0 +1,34 @@
+body{
+	background-color: #a19814;
+	
+}
+.form-reg__title{
+    font-size: 24px;
+    margin: 45px 43%; 
+}
+.form-reg__inputs{
+    margin: 0px 43%;
+    display: flex;
+    flex-direction: column;	
+
+}
+input{
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+label{
+    margin-bottom: 3px;
+}
+.sex{
+    margin-bottom: 10px;
+}
+.submit{
+    height: 30px;
+    border-radius: 5px;
+}
+input {
+    width: 100%;
+}
+input[type="radio"]{
+    width: 10%;
+}
