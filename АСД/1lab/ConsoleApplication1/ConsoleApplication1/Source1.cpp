@@ -32,7 +32,6 @@ int main() {
     SetConsoleOutputCP(1251);
     /////////////// Створення масиву /////////////// 
     // Оголошення змінних
-    n = control();
     int value;
 
     int* array1 = new int[n];
@@ -40,13 +39,11 @@ int main() {
     int* array3 = new int[n];
     int* array4 = new int[n];
 
-
-    printArray(array1, 10);
     unsigned int start_time, end_time, search_time;
     cout << "\nBubble sort:" << endl;
-    for (size_t i = 1000; i < 100000; i += 1000)
+    for (size_t n = 1000; n < 100000; n += 1000)
     {
-        int* array = new int[i];
+        int* array = new int[n];
         for (int j = 0; j < n; j++) {
             array[j] = rand() % 2001 - 1000;
         }
@@ -56,116 +53,59 @@ int main() {
         end_time = clock(); // кінцевий час 
         search_time = end_time - start_time; // шуканий час 
 
-        cout << i << " ітерація:" << search_time << "ms" << endl;
+        cout << n << " ітерація:" << search_time << "ms" << endl;
     }
 
-
     /////////////// Сортування  вставкою /////////////// 
-    start_time = clock(); // початковий час 
-    insertionSort(array1, n);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
     cout << "\nInsertion sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
+    for (size_t n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        insertionSort(array, n);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
 
+        cout << n << " ітерація:" << search_time << "ms" << endl;
+    }
+    
     /////////////// Сортування  виборкою /////////////// 
-    start_time = clock(); // початковий час 
-    selectionSort(array2, n);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
     cout << "\nSelection sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
+    for (size_t n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        selectionSort(array, n);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
+
+        cout << n << " ітерація:" << search_time << "ms" << endl;
+    }
 
     /////////////// Сортування  злиттям /////////////// 
-    start_time = clock(); // початковий час 
-    merge_sortAsc(array3, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
     cout << "\nMerge sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
+    for (size_t n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        merge_sortAsc(array, 0, n - 1);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
 
-    /*cout << "Sorted array in ascending order:\n";
-    printArray(data, size);*/
-    /////////////// Швидке сортування /////////////// 
-    start_time = clock(); // початковий час 
-    quickSort(array4, n);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    printArray(array3, 10);
-    /*
-    * Сортування відсортованого масиву за спаданням
-    */
-    cout << "Сортування у зворотній бік" << endl;
-    start_time = clock(); // початковий час 
-    cout << "1" << endl;
-    mergeSort(array, n);
-    cout << "2" << endl;
-    cout << "1" << endl;
-    mergeSort(array1, n);
-    cout << "2" << endl;
-    mergeSort(array2, n);
-    cout << "3" << endl;
-    mergeSort(array3, n);
-    cout << "4" << endl;
-    mergeSort(array4, n);
-    cout << "5" << endl;
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    printArray(array3, 10);
-
-    /////////////// Сортування  бульбашкою /////////////// 
-    start_time = clock(); // початковий час 
-    sort_bubble(array);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nBubble sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  вставкою /////////////// 
-    start_time = clock(); // початковий час 
-    insertionSort(array1, n);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nInsertion sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  виборкою /////////////// 
-    start_time = clock(); // початковий час 
-    selectionSort(array2, n);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nSelection sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  злиттям /////////////// 
-    start_time = clock(); // початковий час 
-    merge_sortAsc(array3, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nMerge sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /*cout << "Sorted array in ascending order:\n";
-    printArray(data, size);*/
-    /////////////// Швидке сортування /////////////// 
-    start_time = clock(); // початковий час 
-    quickSort(array4, n);
-    end_time = clock(); // кінцевий час 
-    search_time = end_time - start_time; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    printArray(array, 10);
-    printArray(array1, 10);
-    printArray(array2, 10);
-    printArray(array3, 10);
-    printArray(array4, 10);
+        cout << n << " ітерація:" << search_time << "ms" << endl;
+    }
 
     system("pause");
     return 0;
