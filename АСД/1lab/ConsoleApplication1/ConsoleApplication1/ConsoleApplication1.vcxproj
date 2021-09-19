@@ -94,7 +94,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <StackCommitSize>
       </StackCommitSize>
-      <StackReserveSize>100</StackReserveSize>
+      <StackReserveSize>100000</StackReserveSize>
       <HeapReserveSize>
       </HeapReserveSize>
       <HeapCommitSize>

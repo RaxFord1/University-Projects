@@ -7,29 +7,42 @@
 #include <stack>
 #include <vector>
 #include <algorithm>
-
+#define N 5
 using namespace std;
 int n; // кількість елементів масиву 
-void print(int* a);
 int control();
 
 void sort_bubble(int* array);
+void sort_bubble_by_first_item(int array[N][3], int n);
+
 void insertionSort(int array[], int size);
+void insertionSort_by_first_item(int arr[N][3], int n);
+
 void selectionSort(int array[], int size);
 
 
 int partition(int array[], int low, int high);
 void quickSort(int arr[], int low, int high);
+int partition_by_first_item(int arr[N][3], int low, int high);
+void quickSort_by_first_item(int arr[N][3], int low, int high);
 
 int partitionNonRecursion(int array[], int low, int high);
 void quickSortNonRecursive(int array[], int n);
 
 void merge(int a[], int b[], int low, int mid, int high);
 void mergeSort(int a[], int len);
+
+
+
 void printArray(int array[], int size);
+void printArray2D(int array[N][3]);
+void printArray2D(int array[][3], int a);
 
 void mergeAsc(int A[], int p, int q, int r);
 void merge_sortAsc(int A[], int p, int r);
+
+void merge_sortAsc_by_first_item(int A[N][3], int p, int r);
+void mergeAsc_by_first_item(int A[N][3], int p, int q, int r);
 
 int main() {
     // 
@@ -125,7 +138,7 @@ int main() {
     //cout << "5" << endl;
     end_time = clock(); // кінцевий час 
     search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\Sorting backwards" << endl;
+    cout << "\n Sorting backwards" << endl;
     cout << "Час роботи програми:" << search_time << "ms" << endl;
 
     //printArray(array3, 10);
@@ -281,15 +294,135 @@ int main() {
     cout << "\nQuick sort:" << endl;
     cout << "Час роботи програми:" << search_time << "ms" << endl;
 
+
+    int arr[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
+    printArray2D(arr);
+    sort_bubble_by_first_item(arr, N);
+    printArray2D(arr);
+
+    int arr2[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
+    insertionSort_by_first_item(arr2, N);
+    printArray2D(arr2);
+
+    int arr3[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
+    quickSort_by_first_item(arr3, 0, N-1);
+    printArray2D(arr3);
+    cout<< "Cgeck" << "\n";
+    int arr4[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
+    merge_sortAsc_by_first_item(arr4, 0, N - 1);
+    printArray2D(arr4);
+
     system("pause");
     return 0;
 }
-// Друк елементів масиву 
-void print(int* a) {
-    for (int i = 0; i < n; i++)
-        cout << a[i] << '\t';
-    cout << endl;
+
+void interchange(int array[N][3], int a, int b){
+    for (int i = 0; i < 3; i++) {
+        int tmp = array[a][i];
+        array[a][i] = array[b][i];
+        array[b][i] = tmp;
+    }
 }
+
+void sort_bubble_by_first_item(int array[N][3], int n) {
+    for (int j = n - 1; j >= 0; j--) {
+        for (int i = 0; i < j; i++) {
+            if (array[i][0] > array[i + 1][0])
+                interchange(array, i, i+1);
+        }
+    }
+}
+
+void insertionSort_by_first_item(int array[N][3], int n){
+    for (int step = 1; step < n; step++) {
+        int tmp[3];
+        for (int i = 0; i < 3; i++) tmp[i] = array[step][i];
+        int key = array[step][0];
+        int j = step - 1;
+        while (key < array[j][0] && j >= 0) {
+            interchange(array, j + 1, j);
+            --j;
+        }
+        for (int i = 0; i < 3; i++) array[j + 1][i] = tmp[i];
+    }
+}
+int partition_by_first_item(int arr[N][3], int low, int high) {
+    int pivot = arr[high][0]; 
+    int i = (low - 1); 
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j][0] <= pivot) {
+            i++;
+            interchange(arr, i, j);
+        }
+    }
+    interchange(arr, i+1, high);
+    return (i + 1);
+}
+
+void quickSort_by_first_item(int arr[N][3], int low, int high) {
+    if (low < high) {
+        int pi = partition_by_first_item(arr, low, high);
+        quickSort_by_first_item(arr, low, pi - 1);
+        quickSort_by_first_item(arr, pi + 1, high);
+    }
+}
+
+
+void merge_sortAsc_by_first_item(int A[N][3], int p, int r)
+{
+    int q;
+    if (p < r)
+    {
+        q = (p + r) / 2;
+        merge_sortAsc_by_first_item(A, p, q);
+        merge_sortAsc_by_first_item(A, q + 1, r);
+        mergeAsc_by_first_item(A, p, q, r);
+    }
+}
+
+void mergeAsc_by_first_item(int A[N][3], int p, int q, int r)
+{
+    int n1, n2, i, j, k;
+    n1 = q - p + 1;
+    n2 = r - q;
+    auto L = new int[n1][3];
+    auto R = new int[n2][3];
+    for (i = 0;i < n1;i++) {
+        for (int t = 0; t < 3; t++) L[i][t] = (int)A[p + i][t];
+    }
+    
+    for (j = 0;j < n2;j++) {
+        for (int t = 0; t < 3; t++) R[j][t] = (int)A[q + j + 1][t];
+    }
+    
+    i = 0, j = 0;
+    for (k = p;i < n1 && j < n2;k++) {
+        if (L[i][0] < R[j][0]) {
+            
+            for (int t = 0; t < 3; t++) A[k][t] = L[i][t]; 
+            i++;
+        }
+        else {
+            
+            for (int t = 0; t < 3; t++) A[k][t] = R[j][t];
+            j++;
+        }
+    }
+    
+    while (i < n1) {
+        for (int t = 0; t < 3; t++) A[k][t] = L[i][t];
+        k++;
+        i++;
+        
+    }
+    while (j < n2) {
+        for (int t = 0; t < 3; t++) A[k][t] = R[j][t];
+        k++;
+        j++;
+        
+    }
+}
+
 // Контроль введення 
 int control() {
     while (true) {
@@ -504,4 +637,29 @@ void printArray(int array[], int size) {
     for (i = 0; i < size; i++)
         cout << " " << array[i] << ",";
     cout << "\b \b" << endl;
+}
+void printArray2D(int array[N][3]) {
+    int i, j;
+    cout << "{" << "\n";
+    for (i = 0; i < N;i++) {
+        cout << "  [";
+        for (j = 0; j < 3; j++){
+            cout << " " << array[i][j] << ",";
+        }
+        cout << "\b \b ]" << "\n";
+    }
+    cout << "}" << "\n";
+}
+
+void printArray2D(int array[][3], int a) {
+    int i, j;
+    cout << "{" << "\n";
+    for (i = 0; i < a;i++) {
+        cout << "  [";
+        for (j = 0; j < 3; j++) {
+            cout << " " << array[i][j] << ",";
+        }
+        cout << "\b \b ]" << "\n";
+    }
+    cout << "}" << "\n";
 }
