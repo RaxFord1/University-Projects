@@ -17,15 +17,15 @@ void insertionSort(int array[], int size);
 void selectionSort(int array[], int size);
 
 int partition(int array[], int low, int high);
-void quickSort(int array[], int n);
+void quickSort(int arr[], int low, int high);
+void quickSortNonRecursive(int array[], int n);
 
 void merge(int a[], int b[], int low, int mid, int high);
 void mergeSort(int a[], int len);
 void printArray(int array[], int size);
 
-int partitionDesc(int array[], int low, int high);
-void quickSortDesc(int array[], int n);
-
+void mergeAsc(int A[], int p, int q, int r);
+void merge_sortAsc(int A[], int p, int r);
 
 int main() {
     // 
@@ -77,10 +77,10 @@ int main() {
     search_time = end_time - start_time; // шуканий час 
     cout << "\nSelection sort:" << endl;
     cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
+    
     /////////////// Сортування  злиттям /////////////// 
     start_time = clock(); // початковий час 
-    mergeSort(array3, n);
+    merge_sortAsc(array3, 0, n - 1);
     end_time = clock(); // кінцевий час 
     search_time = end_time - start_time; // шуканий час 
     cout << "\nMerge sort:" << endl;
@@ -90,32 +90,37 @@ int main() {
     printArray(data, size);*/
     /////////////// Швидке сортування /////////////// 
     start_time = clock(); // початковий час 
-    quickSort(array4, n);
+    //quickSortNonRecursive(array4, n);
+    quickSort(array4, 0, n - 1);
     end_time = clock(); // кінцевий час 
     search_time = end_time - start_time; // шуканий час 
     cout << "\nQuick sort:" << endl;
     cout << "Час роботи програми:" << search_time << "ms" << endl;
     
-    printArray(array1, 10);
+    printArray(array3, 10);
     /*
     * Сортування відсортованого масиву за спаданням
     */
     cout << "Сортування у зворотній бік" << endl;
     start_time = clock(); // початковий час 
     cout << "1" << endl;
-    quickSortDesc(array1, n);
+    mergeSort(array, n);
     cout << "2" << endl;
-    quickSortDesc(array2, n);
+    cout << "1" << endl;
+    mergeSort(array1, n);
+    cout << "2" << endl;
+    mergeSort(array2, n);
     cout << "3" << endl;
-    quickSortDesc(array3, n);
+    mergeSort(array3, n);
     cout << "4" << endl;
-    quickSortDesc(array4, n);
+    mergeSort(array4, n);
     cout << "5" << endl;
     end_time = clock(); // кінцевий час 
     search_time = end_time - start_time; // шуканий час 
-    cout << "\nQuick sort 5 arrays:" << endl;
+    cout << "\nQuick sort:" << endl;
     cout << "Час роботи програми:" << search_time << "ms" << endl;
-    printArray(array1, 10);
+
+    printArray(array3, 10);
     
     /////////////// Сортування  бульбашкою /////////////// 
     start_time = clock(); // початковий час 
@@ -143,7 +148,7 @@ int main() {
 
     /////////////// Сортування  злиттям /////////////// 
     start_time = clock(); // початковий час 
-    mergeSort(array3, n);
+    merge_sortAsc(array3, 0, n - 1);
     end_time = clock(); // кінцевий час 
     search_time = end_time - start_time; // шуканий час 
     cout << "\nMerge sort:" << endl;
@@ -153,16 +158,19 @@ int main() {
     printArray(data, size);*/
     /////////////// Швидке сортування /////////////// 
     start_time = clock(); // початковий час 
-    quickSort(array4, n);
+    //quickSortNonRecursive(array4, n);
+    quickSort(array4, 0, n - 1);
     end_time = clock(); // кінцевий час 
     search_time = end_time - start_time; // шуканий час 
     cout << "\nQuick sort:" << endl;
     cout << "Час роботи програми:" << search_time << "ms" << endl;
 
-
+    printArray(array, 10);
     printArray(array1, 10);
-    //printArray(data3, n);
-    //printArray(data2, n);
+    printArray(array2, 10);
+    printArray(array3, 10);
+    printArray(array4, 10);
+
     system("pause");
     return 0;
 }
@@ -197,21 +205,25 @@ void swap(int* a, int* b) {
 void sort_bubble(int* array) {
     for (int j = n - 1; j >= 0; j--) {
         for (int i = 0; i < j; i++) {
-            if (array[i] < array[i + 1])
+            if (array[i] > array[i + 1])
                 swap(array[i], array[i + 1]);
         }
     }
 }
-void insertionSort(int array[], int size) {
-    for (int step = 1; step < size; step++) {
-        int key = array[step];
-        int j = step - 1;
+void insertionSort(int arr[], int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++)
+    {
+        key = arr[i];
+        j = i - 1;
 
-        while (key > array[j] && j >= 0) {
-            array[j + 1] = array[j];
-            --j;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j = j - 1;
         }
-        array[j + 1] = key;
+        arr[j + 1] = key;
     }
 }
 
@@ -242,8 +254,24 @@ int partition(int a[], int start, int end) {
     return pIndex;
 }
 
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+
+
+
+
+
 // Iterative Quicksort routine
-void quickSort(int a[], int n)
+void quickSortNonRecursive(int a[], int n)
 {
     stack<pair<int, int>> s;
     int start = 0;
@@ -253,44 +281,7 @@ void quickSort(int a[], int n)
     {
         start = s.top().first, end = s.top().second;
         s.pop();
-        int pivot = partitionDesc(a, start, end);
-        if (pivot - 1 > start) {
-            s.push(make_pair(start, pivot - 1));
-        }
-        if (pivot + 1 < end) {
-            s.push(make_pair(pivot + 1, end));
-        }
-    }
-}
-
-
-int partitionDesc(int a[], int start, int end){
-    int pivot = a[end];
-    int pIndex = start;
-    for (int i = start; i < end; i++)
-    {
-        if (a[i] <= pivot)
-        {
-            swap(a[i], a[pIndex]);
-            pIndex++;
-        }
-    }
-    swap(a[pIndex], a[end]);
-    return pIndex;
-}
-
-// Iterative Quicksort routine
-void quickSortDesc(int a[], int n)
-{
-    stack<pair<int, int>> s;
-    int start = 0;
-    int end = n - 1;
-    s.push(make_pair(start, end));
-    while (!s.empty())
-    {
-        start = s.top().first, end = s.top().second;
-        s.pop();
-        int pivot = partitionDesc(a, start, end);
+        int pivot = partition(a, start, end);
         if (pivot - 1 > start) {
             s.push(make_pair(start, pivot - 1));
         }
@@ -309,7 +300,7 @@ void merge(int a[], int b[], int low, int mid, int high)
     int right = mid + 1;
     int index = low;
     while (left <= mid && right <= high) {
-        if (b[left] <= b[right])
+        if (b[left] >= b[right])
             a[index++] = b[left++];
         else
             a[index++] = b[right++];
@@ -335,6 +326,74 @@ void mergeSort(int a[], int len)
     mergeSort(a, b, 0, len - 1);
     delete[] b;
 }
+
+
+void merge_sortAsc(int A[], int p, int r)
+{
+    int q;
+    if (p < r)
+    {
+        q = (p + r) / 2;
+        merge_sortAsc(A, p, q);
+        merge_sortAsc(A, q + 1, r);
+        mergeAsc(A, p, q, r);
+    }
+}
+
+// Merge sort 
+void mergeAsc(int A[], int p, int q, int r)
+{
+
+    int n1, n2, i, j, k;
+    //size of left array=n1
+    //size of right array=n2       
+    n1 = q - p + 1;
+    n2 = r - q;
+    int *L = new int[n1];
+    int *R = new int[n2];
+    //initializing the value of Left part to L[]
+    for (i = 0;i < n1;i++)
+    {
+        L[i] = A[p + i];
+    }
+    //initializing the value of Right Part to R[]
+    for (j = 0;j < n2;j++)
+    {
+        R[j] = A[q + j + 1];
+    }
+    i = 0, j = 0;
+    //Comparing and merging them
+    //into new array in sorted order 
+    for (k = p;i < n1 && j < n2;k++)
+    {
+        if (L[i] < R[j])
+        {
+            A[k] = L[i++];
+        }
+        else
+        {
+            A[k] = R[j++];
+        }
+    }
+    //If Left Array L[] has more elements than Right Array R[]
+    //then it will put all the
+    // reamining elements of L[] into A[]
+    while (i < n1)
+    {
+        A[k++] = L[i++];
+    }
+    //If Right Array R[] has more elements than Left Array L[]
+    //then it will put all the
+    // reamining elements of L[] into A[]
+    while (j < n2)
+    {
+        A[k++] = R[j++];
+    }
+ }
+
+
+
+
 
 void printArray(int array[], int size) {
     int i;
