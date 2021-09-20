@@ -1,3 +1,5 @@
+/*
+
 #include <iostream> 
 #include <cstdlib> 
 #include <ctime> 
@@ -32,7 +34,6 @@ int main() {
     SetConsoleOutputCP(1251);
     /////////////// Створення масиву /////////////// 
     // Оголошення змінних
-    int value;
 
     int* array1 = new int[n];
     int* array2 = new int[n];
@@ -310,14 +311,11 @@ void mergeAsc(int A[], int p, int q, int r)
         A[k++] = R[j++];
     }
 }
-
-
-
-
-
 void printArray(int array[], int size) {
     int i;
     for (i = 0; i < size; i++)
         cout << " " << array[i] << ",";
     cout << "\b \b" << endl;
 }
+
+*/

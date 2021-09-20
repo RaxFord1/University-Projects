@@ -7,42 +7,24 @@
 #include <stack>
 #include <vector>
 #include <algorithm>
-#define N 5
+
 using namespace std;
 int n; // кількість елементів масиву 
+void print(int* a);
 int control();
-
-void sort_bubble(int* array);
-void sort_bubble_by_first_item(int array[N][3], int n);
-
+void sort_bubble(int* array, int n);
 void insertionSort(int array[], int size);
-void insertionSort_by_first_item(int arr[N][3], int n);
-
 void selectionSort(int array[], int size);
 
-
 int partition(int array[], int low, int high);
-void quickSort(int arr[], int low, int high);
-int partition_by_first_item(int arr[N][3], int low, int high);
-void quickSort_by_first_item(int arr[N][3], int low, int high);
-
-int partitionNonRecursion(int array[], int low, int high);
-void quickSortNonRecursive(int array[], int n);
+void quickSort(int array[], int n);
 
 void merge(int a[], int b[], int low, int mid, int high);
 void mergeSort(int a[], int len);
-
-
-
 void printArray(int array[], int size);
-void printArray2D(int array[N][3]);
-void printArray2D(int array[][3], int a);
 
 void mergeAsc(int A[], int p, int q, int r);
 void merge_sortAsc(int A[], int p, int r);
-
-void merge_sortAsc_by_first_item(int A[N][3], int p, int r);
-void mergeAsc_by_first_item(int A[N][3], int p, int q, int r);
 
 int main() {
     // 
@@ -50,379 +32,89 @@ int main() {
     SetConsoleOutputCP(1251);
     /////////////// Створення масиву /////////////// 
     // Оголошення змінних
-    n = control();
-    int value;
-    int* array = new int[n];
+
     int* array1 = new int[n];
     int* array2 = new int[n];
     int* array3 = new int[n];
     int* array4 = new int[n];
 
-    // заповнення масивів
-    for (int i = 0; i < n; i++) {
-        value = rand() % 2001 - 1000;
-        array[i] = value;
-        array1[i] = value;
-        array2[i] = value;
-        array3[i] = value;
-        array4[i] = value;
+    unsigned int start_time, end_time, search_time;
+    cout << "\nBubble sort:" << endl;
+    for (int n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        sort_bubble(array, n);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
+
+        cout << n << " ітерація:" << search_time << "ms" << endl;
     }
 
-    //printArray(array1, 10);
-    clock_t start_time, end_time;
-    double search_time;
-    cout<< "******************************************" << "\n";
-    cout<< "Всі значення рандомні" << "\n";
-    cout<< "******************************************" << "\n";
-    cout << endl;
-    /////////////// Сортування  бульбашкою /////////////// 
-    start_time = clock(); // початковий час 
-    sort_bubble(array);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nBubble sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms\n";
-
     /////////////// Сортування  вставкою /////////////// 
-    start_time = clock(); // початковий час 
-    insertionSort(array1, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
     cout << "\nInsertion sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms\n";
+    for (int n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        insertionSort(array, n);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
 
-    /////////////// Сортування  виборкою /////////////// 
-    start_time = clock(); // початковий час 
-    selectionSort(array2, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nSelection sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms\n";
-    
-    /////////////// Сортування  злиттям /////////////// 
-    start_time = clock(); // початковий час 
-    merge_sortAsc(array3, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nMerge sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms\n";
-
-    /////////////// Швидке сортування /////////////// 
-    start_time = clock(); // початковий час 
-    //quickSortNonRecursive(array4, n);
-    quickSort(array4, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms\n";
-    
-    //printArray(array3, 10);
-    /*
-    * Сортування відсортованого масиву за спаданням
-    */
-    cout << "******************************************" << "\n";
-    cout << "Сортування у зворотній бік" << "\n";
-    cout << "******************************************" << "\n";
-    cout << endl;
-    start_time = clock(); // початковий час 
-    //cout << "1" << endl;
-    mergeSort(array, n);
-    //cout << "2" << endl;
-    mergeSort(array1, n);
-    //cout << "2" << endl;
-    mergeSort(array2, n);
-    //cout << "3" << endl;
-    mergeSort(array3, n);
-    //cout << "4" << endl;
-    mergeSort(array4, n);
-    //cout << "5" << endl;
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\n Sorting backwards" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    //printArray(array3, 10);
-    
-    /////////////// Сортування  бульбашкою /////////////// 
-    start_time = clock(); // початковий час 
-    sort_bubble(array);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nBubble sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  вставкою /////////////// 
-    start_time = clock(); // початковий час 
-    insertionSort(array1, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nInsertion sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  виборкою /////////////// 
-    start_time = clock(); // початковий час 
-    selectionSort(array2, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nSelection sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  злиттям /////////////// 
-    start_time = clock(); // початковий час 
-    merge_sortAsc(array3, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nMerge sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Швидке сортування /////////////// 
-    start_time = clock(); // початковий час 
-    //quickSortNonRecursive(array4, n);
-    quickSort(array4, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    cout << "******************************************" << "\n";
-    cout << "Сортування коли всього 2 унікальні значення" << "\n";
-    cout << "******************************************" << "\n";
-    cout << endl;
-
-    for (int i = 0; i < n; i++) {
-        value = rand() % 2;
-        array[i] = value;
-        array1[i] = value;
-        array2[i] = value;
-        array3[i] = value;
-        array4[i] = value;
+        cout << n << " ітерація:" << search_time << "ms" << endl;
     }
 
-    /////////////// Сортування  бульбашкою /////////////// 
-    start_time = clock(); // початковий час 
-    sort_bubble(array);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nBubble sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  вставкою /////////////// 
-    start_time = clock(); // початковий час 
-    insertionSort(array1, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nInsertion sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
     /////////////// Сортування  виборкою /////////////// 
-    start_time = clock(); // початковий час 
-    selectionSort(array2, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
     cout << "\nSelection sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
+    for (int n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        selectionSort(array, n);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
 
-    /////////////// Сортування  злиттям /////////////// 
-    start_time = clock(); // початковий час 
-    merge_sortAsc(array3, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nMerge sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Швидке сортування /////////////// 
-    start_time = clock(); // початковий час 
-    //quickSortNonRecursive(array4, n);
-    quickSort(array4, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    cout << "******************************************" << "\n";
-    cout << "Сортування коли всього 1 значення" << "\n";
-    cout << "******************************************" << "\n";
-    cout << endl;
-
-    for (int i = 0; i < n; i++) {
-        value = 1;
-        array[i] = value;
-        array1[i] = value;
-        array2[i] = value;
-        array3[i] = value;
-        array4[i] = value;
+        cout << n << " ітерація:" << search_time << "ms" << endl;
     }
 
-    /////////////// Сортування  бульбашкою /////////////// 
-    start_time = clock(); // початковий час 
-    sort_bubble(array);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nBubble sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  вставкою /////////////// 
-    start_time = clock(); // початковий час 
-    insertionSort(array1, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nInsertion sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
-    /////////////// Сортування  виборкою /////////////// 
-    start_time = clock(); // початковий час 
-    selectionSort(array2, n);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nSelection sort:" << endl;
-    cout << "" << "Час роботи програми:" << search_time << "ms" << endl;
-
     /////////////// Сортування  злиттям /////////////// 
-    start_time = clock(); // початковий час 
-    merge_sortAsc(array3, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
     cout << "\nMerge sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
+    for (int n = 1000; n < 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        /////////////// Сортування  бульбашкою /////////////// 
+        start_time = clock(); // початковий час 
+        merge_sortAsc(array, 0, n - 1);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
 
-    /////////////// Швидке сортування /////////////// 
-    start_time = clock(); // початковий час 
-    //quickSortNonRecursive(array4, n);
-    quickSort(array4, 0, n - 1);
-    end_time = clock(); // кінцевий час 
-    search_time = double(end_time - start_time) ; // шуканий час 
-    cout << "\nQuick sort:" << endl;
-    cout << "Час роботи програми:" << search_time << "ms" << endl;
-
-
-    int arr[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
-    printArray2D(arr);
-    sort_bubble_by_first_item(arr, N);
-    printArray2D(arr);
-
-    int arr2[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
-    insertionSort_by_first_item(arr2, N);
-    printArray2D(arr2);
-
-    int arr3[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
-    quickSort_by_first_item(arr3, 0, N-1);
-    printArray2D(arr3);
-    cout<< "Cgeck" << "\n";
-    int arr4[N][3] = { {1,2,3}, {5,4,6}, {1,5,3}, {6,3,2}, {1,4,3} };
-    merge_sortAsc_by_first_item(arr4, 0, N - 1);
-    printArray2D(arr4);
+        cout << n << " ітерація:" << search_time << "ms" << endl;
+    }
 
     system("pause");
     return 0;
 }
-
-void interchange(int array[N][3], int a, int b){
-    for (int i = 0; i < 3; i++) {
-        int tmp = array[a][i];
-        array[a][i] = array[b][i];
-        array[b][i] = tmp;
-    }
+// Друк елементів масиву 
+void print(int* a) {
+    for (int i = 0; i < n; i++)
+        cout << a[i] << '\t';
+    cout << endl;
 }
-
-void sort_bubble_by_first_item(int array[N][3], int n) {
-    for (int j = n - 1; j >= 0; j--) {
-        for (int i = 0; i < j; i++) {
-            if (array[i][0] > array[i + 1][0])
-                interchange(array, i, i+1);
-        }
-    }
-}
-
-void insertionSort_by_first_item(int array[N][3], int n){
-    for (int step = 1; step < n; step++) {
-        int tmp[3];
-        for (int i = 0; i < 3; i++) tmp[i] = array[step][i];
-        int key = array[step][0];
-        int j = step - 1;
-        while (key < array[j][0] && j >= 0) {
-            interchange(array, j + 1, j);
-            --j;
-        }
-        for (int i = 0; i < 3; i++) array[j + 1][i] = tmp[i];
-    }
-}
-int partition_by_first_item(int arr[N][3], int low, int high) {
-    int pivot = arr[high][0]; 
-    int i = (low - 1); 
-    for (int j = low; j <= high - 1; j++) {
-        if (arr[j][0] <= pivot) {
-            i++;
-            interchange(arr, i, j);
-        }
-    }
-    interchange(arr, i+1, high);
-    return (i + 1);
-}
-
-void quickSort_by_first_item(int arr[N][3], int low, int high) {
-    if (low < high) {
-        int pi = partition_by_first_item(arr, low, high);
-        quickSort_by_first_item(arr, low, pi - 1);
-        quickSort_by_first_item(arr, pi + 1, high);
-    }
-}
-
-
-void merge_sortAsc_by_first_item(int A[N][3], int p, int r)
-{
-    int q;
-    if (p < r)
-    {
-        q = (p + r) / 2;
-        merge_sortAsc_by_first_item(A, p, q);
-        merge_sortAsc_by_first_item(A, q + 1, r);
-        mergeAsc_by_first_item(A, p, q, r);
-    }
-}
-
-void mergeAsc_by_first_item(int A[N][3], int p, int q, int r)
-{
-    int n1, n2, i, j, k;
-    n1 = q - p + 1;
-    n2 = r - q;
-    auto L = new int[n1][3];
-    auto R = new int[n2][3];
-    for (i = 0;i < n1;i++) {
-        for (int t = 0; t < 3; t++) L[i][t] = (int)A[p + i][t];
-    }
-    
-    for (j = 0;j < n2;j++) {
-        for (int t = 0; t < 3; t++) R[j][t] = (int)A[q + j + 1][t];
-    }
-    
-    i = 0, j = 0;
-    for (k = p;i < n1 && j < n2;k++) {
-        if (L[i][0] < R[j][0]) {
-            
-            for (int t = 0; t < 3; t++) A[k][t] = L[i][t]; 
-            i++;
-        }
-        else {
-            
-            for (int t = 0; t < 3; t++) A[k][t] = R[j][t];
-            j++;
-        }
-    }
-    
-    while (i < n1) {
-        for (int t = 0; t < 3; t++) A[k][t] = L[i][t];
-        k++;
-        i++;
-        
-    }
-    while (j < n2) {
-        for (int t = 0; t < 3; t++) A[k][t] = R[j][t];
-        k++;
-        j++;
-        
-    }
-}
-
 // Контроль введення 
 int control() {
     while (true) {
@@ -437,21 +129,23 @@ int control() {
     }
     return n;
 }
-// Перестановка 
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+void swap(int* xp, int* yp)
+{
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
 }
-// Сортування бульбашковим методом 
-void sort_bubble(int* array) {
-    for (int j = n - 1; j >= 0; j--) {
-        for (int i = 0; i < j; i++) {
-            if (array[i] > array[i + 1])
-                swap(array[i], array[i + 1]);
-        }
-    }
+
+// A function to implement bubble sort 
+void sort_bubble(int arr[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+        for (j = 0; j < n - i - 1; j++)
+            if (arr[j] > arr[j + 1])
+                swap(&arr[j], &arr[j + 1]);
 }
+
 void insertionSort(int arr[], int n)
 {
     int i, key, j;
@@ -480,38 +174,8 @@ void selectionSort(int array[], int size) {
     }
 }
 
-int partition(int arr[], int low, int high)
-{
-    int pivot = arr[high];    // pivot
-    int i = (low - 1);  // Index of smaller element
 
-    for (int j = low; j <= high - 1; j++)
-    {
-        // If current element is smaller than or
-        // equal to pivot
-        if (arr[j] <= pivot)
-        {
-            i++;    // increment index of smaller element
-            swap(&arr[i], &arr[j]);
-        }
-    }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
-}
-
-void quickSort(int arr[], int low, int high)
-{
-    if (low < high)
-    {
-        int pi = partition(arr, low, high);
-
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
-
-
-int partitionNonRecursion(int a[], int start, int end) {
+int partition(int a[], int start, int end) {
     int pivot = a[end];
     int pIndex = start;
     for (int i = start; i < end; i++)
@@ -526,7 +190,8 @@ int partitionNonRecursion(int a[], int start, int end) {
     return pIndex;
 }
 
-void quickSortNonRecursive(int a[], int n)
+// Iterative Quicksort routine
+void quickSort(int a[], int n)
 {
     stack<pair<int, int>> s;
     int start = 0;
@@ -536,7 +201,7 @@ void quickSortNonRecursive(int a[], int n)
     {
         start = s.top().first, end = s.top().second;
         s.pop();
-        int pivot = partitionNonRecursion(a, start, end);
+        int pivot = partition(a, start, end);
         if (pivot - 1 > start) {
             s.push(make_pair(start, pivot - 1));
         }
@@ -582,6 +247,7 @@ void mergeSort(int a[], int len)
     delete[] b;
 }
 
+
 void merge_sortAsc(int A[], int p, int r)
 {
     int q;
@@ -594,23 +260,30 @@ void merge_sortAsc(int A[], int p, int r)
     }
 }
 
+// Merge sort 
 void mergeAsc(int A[], int p, int q, int r)
 {
 
-    int n1, n2, i, j, k;   
+    int n1, n2, i, j, k;
+    //size of left array=n1
+    //size of right array=n2       
     n1 = q - p + 1;
     n2 = r - q;
-    int *L = new int[n1];
-    int *R = new int[n2];
+    int* L = new int[n1];
+    int* R = new int[n2];
+    //initializing the value of Left part to L[]
     for (i = 0;i < n1;i++)
     {
         L[i] = A[p + i];
     }
+    //initializing the value of Right Part to R[]
     for (j = 0;j < n2;j++)
     {
         R[j] = A[q + j + 1];
     }
     i = 0, j = 0;
+    //Comparing and merging them
+    //into new array in sorted order 
     for (k = p;i < n1 && j < n2;k++)
     {
         if (L[i] < R[j])
@@ -622,44 +295,24 @@ void mergeAsc(int A[], int p, int q, int r)
             A[k] = R[j++];
         }
     }
+    //If Left Array L[] has more elements than Right Array R[]
+    //then it will put all the
+    // reamining elements of L[] into A[]
     while (i < n1)
     {
         A[k++] = L[i++];
     }
+    //If Right Array R[] has more elements than Left Array L[]
+    //then it will put all the
+    // reamining elements of L[] into A[]
     while (j < n2)
     {
         A[k++] = R[j++];
     }
- }
-
+}
 void printArray(int array[], int size) {
     int i;
     for (i = 0; i < size; i++)
         cout << " " << array[i] << ",";
     cout << "\b \b" << endl;
-}
-void printArray2D(int array[N][3]) {
-    int i, j;
-    cout << "{" << "\n";
-    for (i = 0; i < N;i++) {
-        cout << "  [";
-        for (j = 0; j < 3; j++){
-            cout << " " << array[i][j] << ",";
-        }
-        cout << "\b \b ]" << "\n";
-    }
-    cout << "}" << "\n";
-}
-
-void printArray2D(int array[][3], int a) {
-    int i, j;
-    cout << "{" << "\n";
-    for (i = 0; i < a;i++) {
-        cout << "  [";
-        for (j = 0; j < 3; j++) {
-            cout << " " << array[i][j] << ",";
-        }
-        cout << "\b \b ]" << "\n";
-    }
-    cout << "}" << "\n";
 }
