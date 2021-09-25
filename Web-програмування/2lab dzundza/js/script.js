@@ -16,6 +16,7 @@ function call(){
     lower = parseInt(document.getElementById("lower").value);
     upper = parseInt(document.getElementById("upper").value);
     step = parseFloat(document.getElementById("step").value);
+    step = (upper - lower)/step;
 
     let select = document.getElementById('cycle_type');
     let type = select.options[select.selectedIndex].value;
