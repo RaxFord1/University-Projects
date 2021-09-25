@@ -16,7 +16,6 @@ function call(){
     lower = parseInt(document.getElementById("lower").value);
     upper = parseInt(document.getElementById("upper").value);
     step = parseFloat(document.getElementById("step").value);
-    step = (upper - lower)/step;
 
     let select = document.getElementById('cycle_type');
     let type = select.options[select.selectedIndex].value;
@@ -32,13 +31,12 @@ function call(){
     console.log("values:",values);
     tabulate(values);
 }
-
 function calc_for(){
     console.log("Doing for");
     let values = [];
 
-    for (x = lower; x < upper; x = x + step){
-        y = (((4*x)**3) * ((x*1)**2)**0.33);
+    for (x = lower; x <= upper; x = x + step){
+        y = 1000*(Math.abs(x-1));
         values.push(y);
     }
     return values
@@ -47,8 +45,8 @@ function calc_while(){
     console.log("Doing while");
     let values = [];
     let x = lower;
-    while (x<upper){
-        y = (((4*x)**3) * ((x*1)**2)**0.33);
+    while (x<=upper){
+        y = 0.005*(0.2*x**2)**2;
         values.push(y);
         x = x + step;
     }
@@ -60,10 +58,10 @@ function calc_do_while(){
     let values = [];
     x = lower;
     do {
-        y = (((4*x)**3) * ((x*1)**2)**0.33);
+        y = 0.005*(0.2*x**2)**2;
         values.push(y);
         x+=step;
-    } while(x<upper);
+    } while(x<=upper);
     return values;
 }
 
