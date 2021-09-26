@@ -1,3 +1,5 @@
 ﻿  ConsoleApplication1.cpp
-D:\Университет\АСД\1lab\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(116,13): warning C4129: Q: неизвестная escape-последовательность
+D:\Университет\АСД\1lab\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(74,10): warning C4101: start_time: неиспользованная локальная переменная
+D:\Университет\АСД\1lab\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(74,22): warning C4101: end_time: неиспользованная локальная переменная
+D:\Университет\АСД\1lab\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(75,9): warning C4101: search_time: неиспользованная локальная переменная
   ConsoleApplication1.vcxproj -> D:\Университет\АСД\1lab\ConsoleApplication1\Debug\ConsoleApplication1.exe

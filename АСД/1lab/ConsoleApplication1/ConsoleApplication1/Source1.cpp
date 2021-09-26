@@ -1,5 +1,3 @@
-/*
-
 #include <iostream> 
 #include <cstdlib> 
 #include <ctime> 
@@ -9,12 +7,15 @@
 #include <stack>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 int n; // кількість елементів масиву 
 void print(int* a);
 int control();
-void sort_bubble(int* array);
+
+void sort_bubble(int arr[], int n);
+
 void insertionSort(int array[], int size);
 void selectionSort(int array[], int size);
 
@@ -28,86 +29,108 @@ void printArray(int array[], int size);
 void mergeAsc(int A[], int p, int q, int r);
 void merge_sortAsc(int A[], int p, int r);
 
+void quick_sort1D(int* array, int first, int last);
+void quick_sort2D(int** array, int first, int last, int h);
+
+
 int main() {
     // 
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    /////////////// Створення масиву /////////////// 
-    // Оголошення змінних
+    ofstream myfile;
 
-    int* array1 = new int[n];
-    int* array2 = new int[n];
-    int* array3 = new int[n];
-    int* array4 = new int[n];
 
     unsigned int start_time, end_time, search_time;
     cout << "\nBubble sort:" << endl;
-    for (size_t n = 1000; n < 100000; n += 1000)
+
+    myfile.open("D:/Университет/АСД/1lab/results/bubble.txt");
+    for (int n = 1000; n < 100000; n += 1000)
     {
         int* array = new int[n];
         for (int j = 0; j < n; j++) {
             array[j] = rand() % 2001 - 1000;
         }
-        /////////////// Сортування  бульбашкою /////////////// 
         start_time = clock(); // початковий час 
-        sort_bubble(array);
+        sort_bubble(array, n);
         end_time = clock(); // кінцевий час 
         search_time = end_time - start_time; // шуканий час 
-
+        myfile << std::to_string(search_time) + "\n";
         cout << n << " ітерація:" << search_time << "ms" << endl;
     }
+    myfile.close();
 
     /////////////// Сортування  вставкою /////////////// 
+    myfile.open("D:/Университет/АСД/1lab/results/insertion.txt");
     cout << "\nInsertion sort:" << endl;
-    for (size_t n = 1000; n < 100000; n += 1000)
+    for (int n = 1000; n < 100000; n += 1000)
     {
         int* array = new int[n];
         for (int j = 0; j < n; j++) {
             array[j] = rand() % 2001 - 1000;
         }
-        /////////////// Сортування  бульбашкою /////////////// 
         start_time = clock(); // початковий час 
         insertionSort(array, n);
         end_time = clock(); // кінцевий час 
         search_time = end_time - start_time; // шуканий час 
-
+        myfile << std::to_string(search_time) + "\n";
         cout << n << " ітерація:" << search_time << "ms" << endl;
     }
-    
+    myfile.close();
+
     /////////////// Сортування  виборкою /////////////// 
     cout << "\nSelection sort:" << endl;
-    for (size_t n = 1000; n < 100000; n += 1000)
+    myfile.open("D:/Университет/АСД/1lab/results/selection.txt");
+    for (int n = 1000; n < 100000; n += 1000)
     {
         int* array = new int[n];
         for (int j = 0; j < n; j++) {
             array[j] = rand() % 2001 - 1000;
         }
-        /////////////// Сортування  бульбашкою /////////////// 
         start_time = clock(); // початковий час 
         selectionSort(array, n);
         end_time = clock(); // кінцевий час 
         search_time = end_time - start_time; // шуканий час 
-
+        myfile << std::to_string(search_time) + "\n";
         cout << n << " ітерація:" << search_time << "ms" << endl;
     }
+    myfile.close();
 
     /////////////// Сортування  злиттям /////////////// 
     cout << "\nMerge sort:" << endl;
-    for (size_t n = 1000; n < 100000; n += 1000)
+    myfile.open("D:/Университет/АСД/1lab/results/merge.txt");
+    for (int n = 1000; n < 100000; n += 1000)
     {
         int* array = new int[n];
         for (int j = 0; j < n; j++) {
             array[j] = rand() % 2001 - 1000;
         }
-        /////////////// Сортування  бульбашкою /////////////// 
         start_time = clock(); // початковий час 
         merge_sortAsc(array, 0, n - 1);
         end_time = clock(); // кінцевий час 
         search_time = end_time - start_time; // шуканий час 
+        myfile << std::to_string(search_time) + "\n";
+        cout << n << " ітерація:" << search_time << "ms" << endl;
+    }
+    myfile.close();
 
+    myfile.open("D:/Университет/АСД/1lab/results/quick_sort.txt");
+    /////////////// Швидке сортування /////////////// 
+    cout << "\Quick sort:" << endl;
+    for (int n = 1000; n <= 100000; n += 1000)
+    {
+        int* array = new int[n];
+        for (int j = 0; j < n; j++) {
+            array[j] = rand() % 2001 - 1000;
+        }
+        start_time = clock(); // початковий час 
+        quick_sort1D(array, 0, n - 1);
+        end_time = clock(); // кінцевий час 
+        search_time = end_time - start_time; // шуканий час 
+        myfile << std::to_string(search_time) + "\n";
         cout << n << " ітерація:" << search_time << "ms" << endl;
     }
 
+    myfile.close();
     system("pause");
     return 0;
 }
@@ -131,22 +154,23 @@ int control() {
     }
     return n;
 }
-// Перестановка 
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+void swap(int* xp, int* yp)
+{
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
 }
 
-// Сортування бульбашоковим методом 
-void sort_bubble(int* array) {
-    for (int j = n - 1; j >= 0; j--) {
-        for (int i = 0; i < j; i++) {
-            if (array[i] > array[i + 1])
-                swap(array[i], array[i + 1]);
-        }
-    }
+// A function to implement bubble sort 
+void sort_bubble(int arr[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+        for (j = 0; j < n - i - 1; j++)
+            if (arr[j] > arr[j + 1])
+                swap(&arr[j], &arr[j + 1]);
 }
+
 void insertionSort(int arr[], int n)
 {
     int i, key, j;
@@ -189,6 +213,50 @@ int partition(int a[], int start, int end) {
     }
     swap(a[pIndex], a[end]);
     return pIndex;
+}
+
+void quick_sort2D(int** array, int first, int last, int h) {
+    int i = first, j = last, x = array[(first + last) / 2][h];
+    int* tmp;
+    do {
+        while (array[i][h] < x) { i++; }
+        while (array[j][h] > x) { j--; }
+        if (i <= j) {
+            if (i < j) {
+                tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+            }
+            i++;
+            j--;
+
+        }
+
+    } while (i <= j);
+    if (i < last) quick_sort2D(array, i, last, h);
+    if (first < j) quick_sort2D(array, first, j, h);
+}
+
+void quick_sort1D(int* array, int first, int last) {
+    int i = first, j = last, x = array[(first + last) / 2];
+    int tmp;
+    do {
+        while (array[i] < x) { i++; }
+        while (array[j] > x) { j--; }
+        if (i <= j) {
+            if (i < j) {
+                tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+            }
+            i++;
+            j--;
+
+        }
+
+    } while (i <= j);
+    if (i < last) quick_sort1D(array, i, last);
+    if (first < j) quick_sort1D(array, first, j);
 }
 
 // Iterative Quicksort routine
@@ -317,5 +385,3 @@ void printArray(int array[], int size) {
         cout << " " << array[i] << ",";
     cout << "\b \b" << endl;
 }
-
-*/
