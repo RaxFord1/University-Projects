@@ -1,4 +1,5 @@
-﻿using System;
+
+using System;
 
 namespace Lection2
 {
@@ -26,15 +27,13 @@ namespace Lection2
         public static string dzen = "I have no dzen.";
         readonly int minWorkingDays;
         int[] firstHalf = new int[15];
-        int[] secondHalf = new int[15];
+        int[,] secondHalf = new int[15,15];
         static Worker() => dzen = "Beautiful is better than ugly.";
         public Worker(int _paidDays, double _salary, int _minWorkingDays = 3)
         {
             paidDays = _paidDays; // 22
             salary = _salary;
             minWorkingDays = _minWorkingDays;
-            firstHalf = new int[(int)(_paidDays/2)];
-            secondHalf = new int[(int)(_paidDays+1/2)];
         }
         public void Hours(int x)
         {
@@ -55,8 +54,8 @@ namespace Lection2
         public int Salary(params int[] salary_per_day)
         {
             int sum = 0;
-    
-            for (int i=0; i<salary_per_day.Length; i++)
+
+            for (int i = 0; i < salary_per_day.Length; i++)
             {
                 sum += salary_per_day[i];
             }
@@ -64,7 +63,7 @@ namespace Lection2
         }
 
         public double CalculateTaxes(int daysWorked, double tax = 0.3, double fee = 0.1)
-        { 
+        {
             // tax - налог на ЗП, fee - Сборы на что-то там
             if (daysWorked < minWorkingDays)
             {
@@ -75,41 +74,46 @@ namespace Lection2
             double taxes = salaryWithoutTaxes * tax;
             double fees = salaryWithoutTaxes * fee;
             double salaryAfterTaxes = salaryWithoutTaxes - taxes - fees;
-            Console.WriteLine($"Salary withour taxes = {salaryWithoutTaxes}; " + 
-                            $"Taxes = {taxes}; " + 
-                            $"Fees = {fees}; " + 
+            Console.WriteLine($"Salary withour taxes = {salaryWithoutTaxes}; " +
+                            $"Taxes = {taxes}; " +
+                            $"Fees = {fees}; " +
                             $"Salary after taxes = {salaryAfterTaxes}.");
 
             return salaryAfterTaxes;
         }
         public static string Print(params string[] args)
         {
-            string result = dzen+"\n";
-            foreach (var i in args) 
+            string result = dzen + "\n";
+            foreach (var i in args)
                 result += i + "\n";
             return result;
         }
 
-        public int this[int n]{
-            get {
-                if (n > firstHalf.Length-1 && n < firstHalf.Length-1 + secondHalf.Length-1) {
-                    return secondHalf[n - firstHalf.Length];
-                } else if (n < firstHalf.Length-1 && n >= 0) {
-                    return firstHalf[n];
+        public int this[int n1, int n2=-1]
+        {
+            get
+            {
+                if(n2 == -1)
+                {
+                    return firstHalf[n1];
                 }
-                return 0;
+                else {
+                    return secondHalf[n1, n2];
+                }
             }
-            set {
-                if (n > firstHalf.Length && n < firstHalf.Length + secondHalf.Length-1)
+            set
+            {
+                if (n2 == -1)
                 {
-                    secondHalf[n - firstHalf.Length] = value;
+                    firstHalf[n1] = value;
                 }
-                else if (n < firstHalf.Length && n >= 0)
+                else
                 {
-                    firstHalf[n] = value;
+                    secondHalf[n1, n2] = value;
                 }
             }
         }
+        
     }
 
     class Program
@@ -174,14 +178,33 @@ namespace Lection2
                 "Simple is better than complex",
                 "Complex is better than complicated"));
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 15; i++)
                 worker[i] = rand.Next(-max_rand_value, max_rand_value);
 
-            for (int i = 0; i < 30; i++)
-                Console.Write($" i{i}: { worker[i]},");
-            Console.WriteLine("\b \b");
+            for (int i = 0; i < 15; i++)
+                for (int j = 0; j < 15; j++)
+                    worker[i, j] = rand.Next(-max_rand_value, max_rand_value);
 
-            Console.WriteLine($"Temp: {TemperatureConverter.FahrenheitToCelsius("35")} "); 
+            Console.WriteLine("1D array:");
+            Console.Write("[");
+            for (int i = 0; i < 15; i++)
+                Console.Write($" { worker[i]},");
+            Console.WriteLine("\b \b]");
+
+            Console.WriteLine("2D array:");
+            Console.WriteLine("[");
+            for (int i = 0; i < 15; i++)
+            {
+                Console.Write("    [");
+                for (int j = 0; j < 15; j++) {
+                    Console.Write($" {worker[i, j]},");
+                }
+                Console.WriteLine("\b \b]");
+            }
+            Console.WriteLine("]");
+                    
+
+            Console.WriteLine($"Temp: {TemperatureConverter.FahrenheitToCelsius("35")} ");
 
             Console.ReadKey();
         }
