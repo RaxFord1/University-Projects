@@ -1,35 +1,46 @@
-int main()
-{
-    char str[300];
-    cout << "Enter text:\n";
-    cin.getline(str, 300);
+#define _CRT_SECURE_NO_WARNINGS//strtok is not safe function. Delete depricate warning
+#include "windows.h"
+#include <string>
+#include <vector>
+#include <iostream> 
+#include <fstream> 
 
-    char a[100][10];
-    int frequencies[100] = {}, n = 0, i;
+using namespace std;
 
-    char* words = strtok(str, "., \t");
+int main() {
 
+	ifstream fin("D:/Shakespeare_Hamlet.txt");//open the file
 
-    while (words != NULL)// пока есть лексемы
-    {
-        for (i = 0; i < n: ++i)
-            if (strcmp(a[i], words) == 0)
-            {
-                ++frequencies[i];
-                break;
-            }
+	if (!fin.is_open()) {
+		cout << "Couldn't open the file!" << endl;
+	}
+	else {
+		int count = 0;//num of repeats
 
-        if (i == n)
-        {
-            // Добавление
-        }
+		const int length = 101;//max lenght of line
+		char str[length];//line that we read
+		char word[length];//word that we are looking for
 
-        words = strtok(NULL, "., \t");
-    }
+		cout << "Enter a word to find:" << endl;
+		cin >> word;//reading word
 
+		while (fin.getline(str, length)) {
+			char* token = strtok(str, " ");//find first occurence of delimeter
 
-    //...
+			while (token != NULL) { // if no occurence found -> continue with the next line
+				const char* p;
+				p = strstr(token, word); // returns pointer on the first occurrence of word in token
 
-    system("pause");
-    return 0;
+				if (p != NULL) {
+					count++;
+				}
+				token = strtok(NULL, " ,.!:;-?");//continue to find occurence of delimeter from where we ended last time
+			}
+		}
+		//print the results
+		cout << "Number of repeats of the word '" << word << "' = " << count << endl;
+	}
+	fin.close();//close the file stream
+	system("pause");//pause console
+	return 0;
 }
