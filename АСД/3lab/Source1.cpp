@@ -1,4 +1,4 @@
-ï»¿#include "windows.h"
+#include "windows.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -59,7 +59,7 @@ int main() {
 		fillArr(arr, sizeOfArray);
 
 		//Write random values to array
-		out.write((char*)arr, sizeof(int)*sizeOfArray);
+		out.write((char*)arr, sizeof(int) * sizeOfArray);
 		out.close();
 		delete[]arr;
 
@@ -313,7 +313,7 @@ int main() {
 				cout << "Couldn't open file on read or write!" << endl;
 			}
 			else {
-				//ÐœÐÐ¡Ð˜Ð’, Ð©Ðž Ð—Ð‘Ð•Ð Ð†Ð“ÐÐ„Ð¢Ð¬Ð¡Ð¯ Ð£ Ð¤ÐÐ™Ð›Ð† Ð”Ðž Ð’ÐÐ•Ð¡Ð•ÐÐÐ¯ Ð—ÐœÐ†Ð
+				//ÌÀÑÈÂ, ÙÎ ÇÁÅÐ²ÃÀªÒÜÑß Ó ÔÀÉË² ÄÎ ÂÍÅÑÅÍÍß ÇÌ²Í
 				file.read((char*)&control, ROWS * COLS * sizeof(int));
 				cout << "Array in file:" << endl;
 				printArr(control);

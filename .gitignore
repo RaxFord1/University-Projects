@@ -2,4 +2,7 @@
 *.cvxproj*
 *.user
 *.tlog
+.idea/
+*.exe
+*.max
 Debug/
