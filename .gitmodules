@@ -1,3 +1,6 @@
 [submodule "web/7lab"]
 	path = web/7lab
 	url = https://github.com/RaxFord1/magicball.git
+[submodule "web/8lab"]
+	path = web/8lab
+	url = https://github.com/RaxFord1/StickmanFight.git
