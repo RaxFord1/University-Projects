@@ -1,0 +1,3 @@
+[submodule "web/7lab"]
+	path = web/7lab
+	url = https://github.com/RaxFord1/magicball.git
