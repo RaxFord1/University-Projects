@@ -1,11 +1,145 @@
 html, body {
     height:100%;
     background-color: white;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container{
+    text-align: center;
+    margin: 0 auto; 
+    width:88%;
+    height:100%;
+    margin-top: 20px;
+}
+.rolls{
+    margin-top:20%;
+    flex-direction: row;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.player_value{
+    top: 50%;
+    transform: translateY(50%);
+    text-align: center;
+    width: 15%;
+}
+.fight_button{
+    height:100%;
+    width:60%;
+}
+progress{
+    width: 75%;
+    height: 2vw;
+}
+.hitg{
+    transform:scale(-1, 1);
+    transform:translate(-900, 0);
+}
+.player_icon{
+    height:100%;
+    width:100%;
+}
+.first_player {
+    text-align:center;
+    float: left;
+    width:33%;
+}
+.second_player {
+    text-align:center;
+    float: left;
+    width: 33%;
+}
+.name {
+    font-size: 2vw;
+}
+
+.score{
+    font-size:3vw;
+    align-items: center;
+    align-content: center; 
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    display: inline-flex;
+}
+
+.score_left{
+    display: flex;
+}
+.score_right{
+    display: flex;
+}
+
+.button_to_fight {
+    text-align:center;
+    float: left;
+    width: 33%;
 }
 
 
-canvas {
-    border: 1px solid black;
-    margin-top: 10px;
-    margin-left: 2px;
+
+.hit{
+    width: 100%;
+    height: 100%;
+    top:0;
+    position: absolute;
+    display: none;
+    background-color: yellowgreen;
+}
+.last_hit{
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    position: absolute;
+    display: none;
+}
+.shaking {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+}
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+.increasing {
+    animation: increase 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes increase {
+    10%, 90% {
+        font-size:3vw;
+    }
+
+    20%, 80% {
+        font-size:4vw;
+    }
+
+    30%, 70% {
+        font-size:5vw;
+    }
+    
+    40%, 60% {
+        font-size:6vw;
+    }
+
+    50% {
+        font-size:7vw;
+    }
 }
