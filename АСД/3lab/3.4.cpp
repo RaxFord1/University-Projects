@@ -1,4 +1,4 @@
-п»ї//3.4
+//3.4
 #include "windows.h"
 #include <iostream>
 #include <fstream>
@@ -10,51 +10,51 @@ using namespace std;
 
 int main()
 {
-	//РЈРєСЂР°С—РЅСЃСЊРєР° РјРѕРІР° РІ РєРѕРЅСЃРѕР»С–
+	//Українська мова в консолі
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
 
-	int quantityOfFiles = 2;//РєС–Р»СЊРєС–СЃС‚СЊ С„Р°Р№Р»С–РІ
-	string path;//С€Р»СЏС… РґРѕ С„Р°Р№Р»Сѓ
-	ifstream* file = new ifstream[quantityOfFiles];//РјР°СЃРёРІ С„Р°Р№Р»С–РІ РґР»СЏ РїРѕСЂС–РІРЅСЏРЅРЅСЏ
+	int quantityOfFiles = 2;//кількість файлів
+	string path;//шлях до файлу
+	ifstream* file = new ifstream[quantityOfFiles];//масив файлів для порівняння
 
-	//Р—РђР”РђРќРќРЇ Р’Р†Р”РџРћР’Р†Р”РќРРҐ Р¤РђР™Р›Р†Р’
+	//ЗАДАННЯ ВІДПОВІДНИХ ФАЙЛІВ
 	for (int i = 0; i < quantityOfFiles; i++) {
-		cout << "Р’РІРµРґС–С‚СЊ С€Р»СЏС… РґРѕ С„Р°Р№Р»Сѓ " << i << " :" << endl;
+		cout << "Введіть шлях до файлу " << i << " :" << endl;
 		cin >> path;
 		file[i].open(path, ios::binary | ios::out);
 		if (!file[i].is_open()) {
-			cout << "РџРѕРјРёР»РєР° РІС–РґРєСЂРёС‚С‚СЏ С„Р°Р№Р»Сѓ!" << endl;
+			cout << "Помилка відкриття файлу!" << endl;
 			i--;
 		}
 	}
 
-	//РџРћР Р†Р’РќРЇРќРќРЇ Р¤РђР™Р›Р†Р’
-	//Р”РѕРІР¶РёРЅР° РїРµСЂС€РѕРіРѕ С„Р°Р№Р»Р°
+	//ПОРІВНЯННЯ ФАЙЛІВ
+	//Довжина першого файла
 	file[0].seekg(0, ios::end);
 	int lengthOfFirst = file[0].tellg();
 	file[0].seekg(0, ios::beg);
 
-	//Р”РѕРІР¶РёРЅР° РґСЂСѓРіРѕРіРѕ С„Р°Р№Р»Р°
+	//Довжина другого файла
 	file[1].seekg(0, ios::end);
 	int lengthOfSecond = file[1].tellg();
 	file[1].seekg(0, ios::beg);
 
-	//Р’РјС–СЃС‚ С†РёС… С„Р°Р№Р»С–РІ
+	//Вміст цих файлів
 	char* content1 = new char[lengthOfFirst];
 	char* content2 = new char[lengthOfSecond];
 
-	//Р—С‡РёС‚СѓРІР°РЅРЅСЏ РІРјС–СЃС‚Сѓ
+	//Зчитування вмісту
 	file[0].read(content1, lengthOfFirst);
 	file[1].read(content2, lengthOfSecond);
-	//РџРѕСЂС–РІРЅСЏРЅРЅСЏ
+	//Порівняння
 	if (lengthOfFirst != lengthOfSecond) {
 		int i = 0;
 		int j = 0;
 
 		while (i < lengthOfFirst && j < lengthOfSecond) {
 			if (content1[i] != content2[j]) {
-				cout << "Р С–Р·РЅС– Р·Р° СЂРѕР·РјС–СЂРѕРј С‚Р° РІРјС–СЃС‚РѕРј С„Р°Р№Р»Рё!" << endl;
+				cout << "Різні за розміром та вмістом файли!" << endl;
 				break;
 			}
 			else {
@@ -62,18 +62,19 @@ int main()
 				j++;
 			}
 		}
-		if (i == lengthOfFirst || j == lengthOfSecond) {
-			cout << "РћРґРёРЅ С„Р°Р№Р» С” С‡Р°СЃС‚РёРЅРѕСЋ С–РЅС€РѕРіРѕ!" << endl;
+
+		if (i == lengthOfFirst - 1 || j == lengthOfSecond - 1) {
+			cout << "Один файл є частиною іншого!" << endl;
 		}
 	}
 	else {
 		for (int i = 0; i < lengthOfFirst; i++) {
 			if (content1[i] != content2[i]) {
-				cout << "РЈ С„Р°Р№Р»С–РІ СЂС–Р·РЅРёР№ РІРјС–СЃС‚ С‚Р° РѕРґРЅР°РєРѕРІРёР№ СЂРѕР·РјС–СЂ!" << endl;
+				cout << "У файлів різний вміст та однаковий розмір!" << endl;
 				break;
 			}
 		}
-		cout << "РћРґРЅР°РєРѕРІС– Р·Р° СЂРѕР·РјС–СЂРѕРј С‚Р° Р·Р° РІРјС–СЃС‚РѕРј С„Р°Р№Р»Рё!" << endl;
+		cout << "Однакові за розміром та за вмістом файли!" << endl;
 	}
 
 	delete[]content1;
